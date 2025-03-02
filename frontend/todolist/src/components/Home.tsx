@@ -84,7 +84,7 @@ export default function Home() {
     fetchTaskList();
   }
 
-  if (!taskList[0]) {
+  if (!taskList[0] && taskList[0] !== undefined) {
     console.log("task");
     fetchTaskList();
   }
@@ -96,21 +96,23 @@ export default function Home() {
           onSubmit={addTask}
           method="post"
           encType="multipart/form-data"
-          className="w-full justify-around flex px-52">
+          className="w-full justify-around flex px-50 gap-4">
+          <div className="flex gap-4 items-center">
           <input
             type="text"
             placeholder=" Add the task "
             name="task"
-            className="w-96 items-center  text-xl font-semibold  shadow-2xl rounded-xl border-2 border-cyan-700 h-9 text-center"
+            className="w-96 items-center  text-xl font-semibold  shadow-2xl rounded-xl border-2 border-cyan-700 h-9 text-left"
           />
           <button
             type="submit"
-            className=" hover:border-sky-400 bg-cyan-700 px-5 rounded-3xl border-2 border-cyan-100  text-white font-semibold h-9">
+            className=" hover:border-sky-400 bg-cyan-700 px-5  rounded-3xl border-2 border-cyan-100  text-white font-semibold h-9 ">
             Add
           </button>
+          </div>
         </form>
       </div>
-      <div id="tasklist" className="  w-4/5  flex flex-col gap-4  ">
+      <div id="tasklist" className="  w-3/4  flex flex-col gap-4   ">
         {taskList.map((task, id) => (
           <Tasks
             key={id}
@@ -134,18 +136,14 @@ function Tasks({
 }) {
   return (
     <div
-      className={` flex gap-4 items-center w-full h-12 border-b-2 border-black rounded-2xl justify-between px-5 ${
-        task.completed ? "bg-green-200" : "bg-red-200"
+      className={` flex gap-4 items-center will-change-auto h-12 border-b-2 border-black rounded-2xl justify-between px-5 ${
+        task.completed ? "bg-green-200" : "bg-red-100"
       } `}>
+        <div className="flex gap-4 items-center">
       <p>{task.completed ? "✔" : "❌"}</p>
-      <p className="font-semibold text-xl"> {task.taskName}</p>
-      <button
-        onClick={() => {
-          taskEdit(task.uid);
-        }}
-        className=" w-48 px-7 py-1  border-2 rounded-3xl hover:border-sky-700 bg-cyan-700 font-semibold text-gray-200">
-        Mark {task.completed ? "Uncomplete" : "Complete"}
-      </button>
+      <p className=" font-semibold text-xl"> {task.taskName}</p>
+        </div>
+      <div>
       <button
         onClick={() => {
           deleteTask(task.uid);
@@ -153,7 +151,20 @@ function Tasks({
         className="bg-cyan-700  w-29 px-3  border-2 rounded-3xl hover:border-sky-700 font-semibold text-gray-200">
         Delete
       </button>
+      <button
+        onClick={() => {
+          taskEdit(task.uid);
+        }}
+        className=" w-45 px-5 py-0  border-2 rounded-3xl hover:border-sky-700 bg-cyan-700 font-semibold text-gray-200">
+        Mark {task.completed ? "Uncomplete" : "Complete"}
+      </button>
+     
+          </div>
       
     </div>
+   
+
+    
+   
   );
 }
